@@ -9,7 +9,7 @@
             "homepage": "https://www.linkedin.com/in/hussein4alaa"
         }
     ],
-    "homepage": "https://github.com/g4t/laravel-image-resizing",
+    "homepage": "https://github.com/hussein4alaa/laravel-image-resizing",
     "keywords": ["Laravel", "ImageResizing"],
     "require": {
         "illuminate/support": "~7|~8"
