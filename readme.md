@@ -1,9 +1,6 @@
-# ImagesOptimizer
+# Laravel Image Resizing
+### You can change the image size while uploading
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Total Downloads][ico-downloads]][link-downloads]
-[![Build Status][ico-travis]][link-travis]
-[![StyleCI][ico-styleci]][link-styleci]
 
 This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
 
@@ -15,30 +12,36 @@ Via Composer
 $ composer require g4t/laravel-image-resizing
 ```
 
-## Usage
-
-## Change log
-
-Please see the [changelog](changelog.md) for more information on what has changed recently.
-
-## Testing
+##### now publish `ImageResizing.php` using this command:
 
 ``` bash
-$ composer test
+$ php artisan vendor:publish --provider=g4t\ImageResizing\ImageResizingServiceProvider
 ```
 
-## Contributing
+## Usage
 
-Please see [contributing.md](contributing.md) for details and a todolist.
+``` bash
+in folder `config` You will find `ImageResizing.php`
+you will find some examples there
+you can define:
+Image `height`
+Image `width`
+`path` to save images
+`save_orginal` to save orginal image or not
+`full_url` to return full url or not
+`base_url` to use with `full_url`
+```
 
-## Security
+## Use in Controller
+``` bash
+use g4t\ImageResizing\Upload;
+.
+.
+.
+return Upload::file($request->image, 'small');
+```
+#### `small` in our example can find it in ImageResizing.php
 
-If you discover any security related issues, please email author@email.com instead of using the issue tracker.
-
-## Credits
-
-- [Author Name][link-author]
-- [All Contributors][link-contributors]
 
 ## License
 
