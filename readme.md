@@ -15,7 +15,7 @@ $ composer require g4t/laravel-image-resizing
 ##### now publish `ImageResizing.php` using this command:
 
 ``` bash
-$ php artisan vendor:publish --provider=g4t\ImageResizing\ImageResizingServiceProvider
+$ php artisan vendor:publish --tag=ImageResizing.config
 ```
 
 ## Usage
