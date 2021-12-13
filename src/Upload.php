@@ -6,9 +6,12 @@ namespace g4t\ImageResizing;
 class Upload
 {
 
+
     public static function file($image, $type)
     {
         $config = config("ImageResizing.sizes.{$type}");
+        $height = $config['height'];
+        $width = $config['width'];
         $extension = $image->getClientOriginalExtension();
         $check = self::checkExtension($extension);
 
@@ -40,19 +43,31 @@ class Upload
                 break;
         }
         if (!isset($stop)) {
-            $x = imagesx($im);
-            $y = imagesy($im);
-            // if (($config['height'] / $config['width']) < ($x / $y)) {
-            //     $save = imagecreatetruecolor($x, $y);
-            // } else {
-            $save = imagecreatetruecolor($config['height'], $config['width']);
-            // }
-            $new_path = $full_path . "_g4t_" . $config['height'] . "_" . $config['width'] . "." . $extension . "";
+            $x = imagesx($im); // width
+            $y = imagesy($im);  // height
+            if(is_null($width) && is_null($height)) {
+                $height = $y;
+                $width = $x;
+                $config['save_orginal'] = false;
+            }else if(is_null($height) OR is_null($width)) {
+                if(is_null($height)) {
+                    $rato = $width / $x * 100;
+                    $height = $y * (int)$rato / 100;
+                    $height = (int)$height;
+                } else if(is_null($width)) {
+                    $rato = $height / $y * 100;
+                    $width = $x * (int)$rato / 100;
+                    $width = (int)$width;
+                }
+            }
+
+            $save = imagecreatetruecolor($width, $height);
+            $new_path = $full_path . "_g4t_" . $height . "_" . $width . "." . $extension . "";
             imagecopyresized($save, $im, 0, 0, 0, 0, imagesx($save), imagesy($save), $x, $y);
             imagegif($save, $new_path);
             imagedestroy($im);
             imagedestroy($save);
-            $copy_path = $uploadPath . "_g4t_" . $config['height'] . "_" . $config['width'] . "." . $extension;
+            $copy_path = $uploadPath . "_g4t_" . $height . "_" . $width . "." . $extension;
             $images = [
                 'orginal' => [
                     'path' => $config['full_url'] == true ? $config['base_url'] . '/' . $uploadPath :  $uploadPath,
